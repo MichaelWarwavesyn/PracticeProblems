@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            long result = 0;
+            int[] possiblePalindrome;
+
+            // Loop through all possible first numbers
+            for (int i = 999; i > 1; i--)
+            {
+                // Loop through all possible second numbers
+                for ( int j = 999; j > 1; j--)
+                {
+                    possiblePalindrome = GetIntArray(i * j); // Convert product into array
+
+                    // Ceck if palindrome
+                    if( IsPalindrome(possiblePalindrome))
+                    {
+                        // Only save the highest palindrome
+                        if( ( i*j) > result)
+                        {
+                            result = i * j;
+                        }
+                    }
+                }
+            }
+
+            // Output results
+            Console.WriteLine("The largest palindrome made from the product of two 3-digit numbers.: " + result + "\n");
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        // Convert number into an array with each place holding one digit
+        private static int[] GetIntArray(int num)
+        {
+            List<int> listOfInts = new List<int>();
+            while (num > 0)
+            {
+                listOfInts.Add(num % 10);
+                num = num / 10;
+            }
+            listOfInts.Reverse();
+            return listOfInts.ToArray();
+        }
+
+        // Check if palindrome by comparing first and last number and moving inwards
+        private static bool IsPalindrome(int[] possiblePalindrome)
+        {
+            int length = possiblePalindrome.Length; // Number of digits
+
+            for ( int i = 0; i < length / 2; i++)
+            {
+                // If digits are not equal, it is not palindrome
+                if( !(possiblePalindrome[i] == possiblePalindrome[(length - i- 1)] ) )
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}

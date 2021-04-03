@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            int numberOfNaturalNumbers = 100;
+            int sumOfSquares = 0;
+            int squareOfSums = 0;
+            int result = 0;
+
+            sumOfSquares = SumOfSquares(numberOfNaturalNumbers); // Sum of Squares
+            squareOfSums = SquareOfSums(numberOfNaturalNumbers); // Square of Sums
+
+            result = squareOfSums - sumOfSquares; // Find the difference
+            
+            // Output results
+            Console.WriteLine("The difference between the sum of the squares of the first one hundred natural numbers and the square of the sum is: " + result + "\n");
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        // Calculate the Sum of Squares of the given parameter
+        static int SumOfSquares(int numberOfNaturalNumbers)
+        {
+            int squareOfSumsResult = 0;
+
+            // Add each number squared from 1 to numberOfNaturalNumbers
+            for (int i = 1; i <= numberOfNaturalNumbers; i++)
+            {
+                squareOfSumsResult += i * i;
+            }
+
+            return squareOfSumsResult;
+        }
+
+        // Calculate the Square of Sums of the given parameter
+        static int SquareOfSums(int numberOfNaturalNumbers)
+        {
+            int squareOfSumsResult = 0;
+
+            // Add each number from 1 to numberOfNaturalNumbers
+            for (int i = 1; i <= numberOfNaturalNumbers; i++)
+            {
+                squareOfSumsResult += i;
+            }
+
+            squareOfSumsResult = squareOfSumsResult * squareOfSumsResult; // Square the result
+
+            return squareOfSumsResult;
+        }
+    }
+}

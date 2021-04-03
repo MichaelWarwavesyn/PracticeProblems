@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            // Initialize
+            long input = 2000000;
+            long total = 0;
+
+            // Loop through all possible numbers between 1 and input
+            for (long i = 1; i <= input; i++)
+            {
+                if ( IsPrime(i) )
+                {
+                    total += i;
+                }
+            }
+
+            Console.WriteLine(total);
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+
+        }
+
+        // Return if a given number input is prime or not
+        static bool IsPrime(long number)
+        {
+            if (number <= 1) return false; // 1 is NOT Prime
+            if (number == 2) return true; // 2 is Prime
+            if (number % 2 == 0) return false; // Even numbers are NOT Prime
+
+            var boundary = (int)Math.Floor(Math.Sqrt(number)); // Highest possible Prime
+
+            for (long i = 3; i <= boundary; i += 2) // Loop by two because even numbers are not prime
+                if (number % i == 0)
+                    return false;
+
+            return true;
+        }
+    }
+}

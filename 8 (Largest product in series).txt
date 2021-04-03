@@ -1,0 +1,92 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            string filePath = @"C:\Users\Michael\Desktop\Project Euler\8Input.txt";
+            string numberString = "";
+            long highestProduct = 1;
+            long currentHighestProduct = 1;
+            int windowSize = 13;
+
+            // Read in file and put it in list
+            List<string> lines = new List<string>(); // Create an empty list
+            lines = File.ReadAllLines(filePath).ToList(); // Populates list with contents of file
+
+            // Create one string with the list
+            foreach(String line in lines)
+            {
+                numberString = numberString + line; // Concat just read line onto numberString
+            }
+
+            // Initialize number array: 1D array
+            int length = numberString.Length;
+            int[] numberGrid1D = new int[length];
+            
+            // Populate 1D array
+            for (int i = 0; i < length; i++)
+            {
+                numberGrid1D[i] = Convert.ToInt32(Char.GetNumericValue(numberString[i]));
+            }
+
+            // Initialize window
+            int[] window = new int[windowSize];
+            int[] highestWindow = new int[windowSize];
+            
+            // Loop through all possible window possibilities
+            for (int i = 0; i < length - windowSize; i++)
+            {
+                // Get the current window
+                for (int k = 0; k < windowSize; k++)
+                {
+                    window[k] = numberGrid1D[i + k];
+                }
+
+                // Check if current window has the highest product
+                currentHighestProduct = ProductOfWindow(highestProduct, window, windowSize); // Current window product
+                if (currentHighestProduct > highestProduct)
+                {
+                    // Save new highest window and product
+                    for (int k = 0; k < windowSize; k++)
+                    {
+                        highestWindow[k] = numberGrid1D[i + k];
+                    }
+
+                    highestProduct = currentHighestProduct; // Update highest product
+                }
+            }
+
+            // Print highest window and respected product
+            Console.Write("Highest Window: [ ");
+            for (int i = 0; i < windowSize; i++)
+            {
+                Console.Write(highestWindow[i] + " ");
+            }
+            Console.WriteLine("]\nProduct: " + highestProduct);
+            
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        // Calculate product of a given array of numbers
+        static long ProductOfWindow(long highestValue, int[] window, int windowSize)
+        {
+            long productOfWindow = 1;
+
+            for (int i = 0; i < windowSize; i++)
+            {
+                productOfWindow = productOfWindow * window[i];
+            }
+
+            return productOfWindow;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+using System;
+using System.Collections;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            int input = 0;
+            int result = 0;
+
+            // Collect input from user
+            Console.Write("Enter a number to calculate the sum of multiples 3 and 5 below it: ");
+            input = Convert.ToInt16(Console.ReadLine());
+
+            // Run operation
+            result = sumMults3And5(input);
+
+            // Output results
+            Console.WriteLine("The sum of multiples 3 and 5 below " + input + " is: " + result + "\n");
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        public static int sumMults3And5(int input)
+        {
+            // Initialize
+            int sum = 0;
+
+            // Loop through all real numbers below input
+            for (int i = 0; i < input; i++)
+            {
+                // Check if current iteration is a multiple of 3 or 5
+                if ( i%3 == 0 || i%5 == 0)
+                {
+                    // Add number to sum
+                    sum += i;
+                }
+            }
+
+            // Return results
+            return sum;
+        }
+    }
+}

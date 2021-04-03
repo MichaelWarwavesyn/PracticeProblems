@@ -1,0 +1,52 @@
+using System;
+using System.Collections;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            int result = 0;
+            int maxValue = 4000000;
+
+            // Run operation
+            result = sumTheEvenFibValues(maxValue);
+
+            // Output results
+            Console.WriteLine("The sum of even Fibonacci numbers under " + maxValue + " is: " + result + "\n");
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        public static int sumTheEvenFibValues(int maxValue)
+        {
+            // Initialize
+            int sum = 0;
+            int lastIteration = 1;
+            int currentIteration = 2;
+            int nextIteration;
+            
+            // Generate Fibonacci sequence
+            while (currentIteration < maxValue)
+            {
+                // Check if current iteration is even
+                if (currentIteration % 2 == 0 )
+                {
+                    sum += currentIteration;
+                }
+
+                // Iterate Fibonacci values
+                nextIteration = lastIteration + currentIteration; // Used for place holder
+                lastIteration = currentIteration;
+                currentIteration = nextIteration;
+            }
+
+            // Return results
+            return sum;
+        }
+    }
+}

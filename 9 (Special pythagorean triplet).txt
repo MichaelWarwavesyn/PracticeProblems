@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int a = 1;
+            int b = 2;
+            double c = 3;
+            int sum = 1000;
+                
+            // Loop over all possibilities
+            while(((a + b + c) != sum))
+            {
+                a++;
+                b = a + 1;
+                for(int i = a; i < sum; i++)
+                {
+                    // Find c
+                    c = Math.Sqrt(a * a + b * b);
+
+                    // Check if a + b + c sum = given sum
+                    if ((Convert.ToInt32(a + b + c) == sum))
+                    {
+                        break;
+                    }
+
+                    b++; // iterate b
+                }
+            }
+
+            // Print result
+            Console.WriteLine(a + " + " + b + " + " + c + " = " + (a + b + c));
+            Console.WriteLine(a + " * " + b + " * " + c + " = " + (a * b * c));
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+
+        }
+    }
+}

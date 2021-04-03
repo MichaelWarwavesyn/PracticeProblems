@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            long input = 10001;
+            long result = 0;
+
+            int iteration = 0;
+            int counter = 0;
+            while(counter != input)
+            {
+                iteration++;
+                if (isPrime(iteration))
+                {
+                    counter++;
+                    //Console.Write(counter + "'th Prime number:");
+                }
+                //Console.WriteLine(iteration);
+            }
+            result = iteration;
+
+            // Output results
+            Console.WriteLine("The " + input + "th Prime number is: " + result + "\n");
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        // function check whether a   
+        // number is prime or not 
+        static bool isPrime(long n)
+        {
+            // Corner case 
+            if (n <= 1)
+                return false;
+
+            // Check from 2 to n-1 
+            for (long i = 2; i < n; i++)
+                if (n % i == 0)
+                    return false;
+
+            return true;
+        }
+    }
+}

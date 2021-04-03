@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize 
+            int divisorLimit = 500;
+            long triangleNumber = 1;
+            long currentTriangleValue = 1;
+
+            while (true)
+            {
+                currentTriangleValue = 0;
+
+                // Calculate triangle ( sum all digits below )
+                for (int i = 1; i <= triangleNumber; i++)
+                    currentTriangleValue += i;
+
+                //Console.Write(currentTriangleValue + ": ");
+                if (FindNumberOfDivisors(currentTriangleValue) > divisorLimit)
+                    break;
+
+                //Console.WriteLine("");
+                triangleNumber++;
+                Console.WriteLine(currentTriangleValue);
+            }
+
+            Console.WriteLine(currentTriangleValue);
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        static int FindNumberOfDivisors(long currentTriangle)
+        {
+            int numberOfFactors = 1;
+
+            for(int i = 1; i <= currentTriangle; i++)
+            {
+                if (currentTriangle % i == 0)
+                {
+                    numberOfFactors++;
+                }
+            }
+
+            //Console.WriteLine(numberOfFactors);
+            return numberOfFactors;
+        }
+    }
+}

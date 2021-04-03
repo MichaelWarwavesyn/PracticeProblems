@@ -1,0 +1,265 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            int rows = 0;
+            int columns = 0;
+
+
+            using (var reader = new StreamReader(@"C:\Users\Michael\Desktop\Project Euler\11Input.txt"))
+            {
+                rows = File.ReadLines(@"C:\Users\Michael\Desktop\Project Euler\11Input.txt").Count();
+
+                List<string> listOfNumbers = new List<string>();
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine(); // Read the current line
+                    var values = line.Split(' '); // Deligniate by spaces
+                    columns = values.Length; // Save column size
+
+                    // Populate list with all values read value by value
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        listOfNumbers.Add(values[i]);
+                    }
+                }
+
+                // Initialize number array: 2D array
+                int[,] numberGrid2D = new int[rows, columns];
+                int element = 0;
+
+                // Populate 2D array
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        numberGrid2D[i, j] = Convert.ToInt32(listOfNumbers[element]);
+                        element++;
+                        //Console.Write(numberGrid2D[i, j] + " ");
+                    }
+                   // Console.Write("\n");
+                }
+
+                // Initialize window and highest product
+                int currentProduct = 0;
+                int highestProduct = 0;
+                int[] window = new int[4];
+                int[] highestWindow = new int[4];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        //Console.WriteLine(i + " " + j);
+
+                        // Top left
+                        if ( (i < rows - 4) && (j < 4) ) // right down rightDiagonal 
+                        {
+                            // Right
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i, j+1];
+                            window[2] = numberGrid2D[i, j+2];
+                            window[3] = numberGrid2D[i, j+3];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+
+                            // Down
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i+1, j];
+                            window[2] = numberGrid2D[i+2, j];
+                            window[3] = numberGrid2D[i+3, j];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+
+                            // RightDiagonal
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i + 1, j+1];
+                            window[2] = numberGrid2D[i + 2, j+2];
+                            window[3] = numberGrid2D[i + 3, j+3];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+
+                        }
+                        // Middle Top
+                        else if ( (i < rows - 4) && 
+                                  (columns - 4 > j) && (j > 4) ) // right down rightDiagonal leftDiagonal
+                        {
+                            // Right
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i, j + 1];
+                            window[2] = numberGrid2D[i, j + 2];
+                            window[3] = numberGrid2D[i, j + 3];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+
+                            // Down
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i + 1, j];
+                            window[2] = numberGrid2D[i + 2, j];
+                            window[3] = numberGrid2D[i + 3, j];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+
+                            // RightDiagonal
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i + 1, j + 1];
+                            window[2] = numberGrid2D[i + 2, j + 2];
+                            window[3] = numberGrid2D[i + 3, j + 3];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+
+                            // LeftDiagonal
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i + 1, j - 1];
+                            window[2] = numberGrid2D[i + 2, j - 2];
+                            window[3] = numberGrid2D[i + 3, j - 3];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+                        }
+                        // Top right
+                        else if ( (i < rows - 4) && (j > columns - 4) ) // down leftDiagonal
+                        {
+                            // Down
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i + 1, j];
+                            window[2] = numberGrid2D[i + 2, j];
+                            window[3] = numberGrid2D[i + 3, j];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+
+                            // LeftDiagonal
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i + 1, j - 1];
+                            window[2] = numberGrid2D[i + 2, j - 2];
+                            window[3] = numberGrid2D[i + 3, j - 3];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+                        }
+                        // Bottom
+                        else if( (i > rows - 4) && (j < columns - 4) ) // right
+                        {
+                            // Right
+                            window[0] = numberGrid2D[i, j];
+                            window[1] = numberGrid2D[i, j + 1];
+                            window[2] = numberGrid2D[i, j + 2];
+                            window[3] = numberGrid2D[i, j + 3];
+                            currentProduct = CalculateProduct(window);
+                            if (currentProduct > highestProduct)
+                            {
+                                highestProduct = currentProduct;
+
+                                for (int z = 0; z < highestWindow.Length; z++)
+                                {
+                                    highestWindow[z] = window[z];
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Print highest window
+                for(int i = 0; i < highestWindow.Length; i++)
+                {
+                    Console.Write(highestWindow[i] + " ");
+                }
+                Console.WriteLine("\nHighest Product = " + highestProduct); // Print highest product
+            }
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        static int CalculateProduct(int[] currentWindow)
+        {
+            int product = 1;
+
+            for(int i = 0; i < currentWindow.Length; i++)
+            {
+                product *= currentWindow[i];
+            }
+
+            return product;
+        }
+    }
+}

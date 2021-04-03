@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+
+namespace ProjectEuler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize
+            long result = 0;
+            int possibleResult = 20;
+
+            // Loop until a number is divisible by all numbers between 1 and 20
+            while ( !(isDividibleBy1To20(possibleResult)) )
+            {
+                possibleResult += 20; // Iterate by 20 becasue it must be a mult. of 20
+            }
+            result = possibleResult;
+
+            // Output results
+            Console.WriteLine("The smallest positive number that is evenly divisible by all of the numbers from 1 to 20 is: " + result + "\n");
+
+            // Close program
+            Console.WriteLine("Press any key to close");
+            Console.ReadKey();
+        }
+
+        private static bool isDividibleBy1To20(int possibleResult)
+        {
+            // Loop through all possible factors in question
+            for(int i = 1; i < 20; i++)
+            {
+                // If is not divisible by one number, return
+                if (!(possibleResult % i == 0))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}
